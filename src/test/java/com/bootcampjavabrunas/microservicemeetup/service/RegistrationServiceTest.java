@@ -1,25 +1,33 @@
 package com.bootcampjavabrunas.microservicemeetup.service;
 
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
-import org.junit.jupiter.api.Assertions;
+import com.bootcampjavabrunas.microservicemeetup.repository.RegistrationRepository;
+import com.bootcampjavabrunas.microservicemeetup.service.impl.RegistrationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class RegistrationServiceTest {
 
+    RegistrationService registrationService;
+
+    @MockBean
+    RegistrationRepository repository;
+
     @BeforeEach
     public void setUp() {
-        // dependencia do service e dar um new na mesma
+        this.registrationService = new RegistrationServiceImpl(repository);
     }
 
     @Test
