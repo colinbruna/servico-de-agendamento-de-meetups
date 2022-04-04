@@ -26,7 +26,7 @@ public class Registration {
     private String name;
 
     @Column(name = "data_of_registration")
-    private LocalDate dateOfRegistration;
+    private String dateOfRegistration;
 
     @Column
     private String registration;

@@ -21,7 +21,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,7 +41,7 @@ public class RegistrationServiceTest {
 
     @Test
     @DisplayName("Should save an registration")
-    public void saveStudent() {
+    public void saveStudentTest() {
 
         // cenario
         Registration registration = createValidRegistration();
@@ -56,32 +55,18 @@ public class RegistrationServiceTest {
         // assert
         assertThat(savedRegistration.getId()).isEqualTo(101);
         assertThat(savedRegistration.getName()).isEqualTo("Bruna Silva");
-        assertThat(savedRegistration.getDateOfRegistration()).isEqualTo(LocalDate.now());
+        assertThat(savedRegistration.getDateOfRegistration()).isEqualTo("01/04/2022");
         assertThat(savedRegistration.getRegistration()).isEqualTo("001");
-    }
-
-    private Registration createValidRegistration() {
-
-        return Registration.builder()
-                .id(101)
-                .name("Bruna Silva")
-                .dateOfRegistration(LocalDate.now())
-                .registration("001")
-                .build();
     }
 
     @Test
     @DisplayName("Should throw business error when try " +
             "to save a new registration with a registration duplicated")
-    public void shouldNotSaveAsRegistrationDuplicated() {
+    public void shouldNotSaveAsRegistrationDuplicatedTest() {
 
-        // cenario
         Registration registration = createValidRegistration();
-
-        // execucao
         Mockito.when(repository.existsByRegistration(Mockito.any())).thenReturn(true);
 
-        // assert
         Throwable exception = Assertions.catchThrowable( () -> registrationService.save(registration));
         assertThat(exception)
                 .isInstanceOf(BusinessException.class)
@@ -109,5 +94,103 @@ public class RegistrationServiceTest {
         assertThat(foundRegistration.get().getName()).isEqualTo(registration.getName());
         assertThat(foundRegistration.get().getDateOfRegistration()).isEqualTo(registration.getDateOfRegistration());
         assertThat(foundRegistration.get().getRegistration()).isEqualTo(registration.getRegistration());
+    }
+
+    @Test
+    @DisplayName("Should return empty when get an registrstion by id when doesn't exists")
+    public void registrationNotFoundByIdTest() {
+
+        Integer id = 11;
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+
+        Optional<Registration> registration = registrationService.getRegistrationById(id);
+
+        assertThat(registration.isPresent()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Should delete an student")
+    public void deleteRegistrationTest() {
+
+        Registration registration = Registration.builder().id(11).build();
+
+        assertDoesNotThrow(() -> registrationService.delete(registration));
+
+        Mockito.verify(repository, Mockito.times(1)).delete(registration);
+    }
+
+    @Test
+    @DisplayName("Should update an registration")
+    public void updateRegistrationTest(){
+
+        // cenario
+        Integer id =11;
+        Registration updatingRegistration = Registration.builder().id(11).build();
+
+        // execucao
+        Registration updatedRegistration = createValidRegistration();
+        updatedRegistration.setId(id);
+
+        Mockito.when(repository.save(updatingRegistration)).thenReturn(updatedRegistration);
+        Registration registration = registrationService.update(updatingRegistration);
+
+        // assert
+        assertThat(registration.getId()).isEqualTo(updatedRegistration.getId());
+        assertThat(registration.getName()).isEqualTo(updatedRegistration.getName());
+        assertThat(registration.getDateOfRegistration()).isEqualTo(updatedRegistration.getDateOfRegistration());
+        assertThat(registration.getRegistration()).isEqualTo(updatedRegistration.getRegistration());
+    }
+
+    @Test
+    @DisplayName("Should filter registrations must by properties")
+    public void findRegistrationTest(){
+
+        // cenario
+        Registration registration = createValidRegistration();
+        PageRequest pageRequest = PageRequest.of(0,10);
+
+        List<Registration> listRegistrations = Arrays.asList(registration);
+        Page<Registration> page = new PageImpl<Registration>(Arrays.asList(registration),
+                PageRequest.of(0,10),1);
+
+        // execucao
+        Mockito.when(repository.findAll(Mockito.any(Example.class), Mockito.any(PageRequest.class)))
+                .thenReturn(page);
+
+        Page<Registration> result = registrationService.find(registration, pageRequest);
+
+        // assert
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(result.getContent()).isEqualTo(listRegistrations);
+        assertThat(result.getPageable().getPageNumber()).isEqualTo(0);
+        assertThat(result.getPageable().getPageSize()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("Should get an registration model by registration attribute")
+    public void getRegistrationByRegistrationAtrbTest() {
+
+        String registrationAttribute = "1234";
+
+        Mockito.when(repository.findByRegistration(registrationAttribute)).
+                thenReturn(Optional.of(Registration.builder().id(11).registration(registrationAttribute).build()));
+
+        Optional<Registration> registration = registrationService.getRegistrationByRegistrationAttribute(registrationAttribute);
+
+        assertThat(registration.isPresent()).isTrue();
+        assertThat(registration.get().getId()).isEqualTo(11);
+        assertThat(registration.get().getRegistration()).isEqualTo(registrationAttribute);
+
+        Mockito.verify(repository, Mockito.times(1)).findByRegistration(registrationAttribute);
+    }
+
+    private Registration createValidRegistration() {
+
+        return Registration.builder()
+                .id(101)
+                .name("Bruna Silva")
+                .dateOfRegistration("01/04/2022")
+                .registration("001")
+                .build();
     }
 }

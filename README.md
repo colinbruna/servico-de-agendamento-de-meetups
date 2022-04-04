@@ -1,4 +1,4 @@
-# Bootcamp Java Womakerscode - Servico de agendamento de meetups
+# Bootcamp Java Womakerscode - Serviço de agendamento de meetups
 
 ## Projeto:
 
