@@ -22,6 +22,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
    public Registration save(Registration registration) {
+
         if (repository.existsByRegistration(registration.getRegistration())) {
             throw new BusinessException("Registration already created");
         }

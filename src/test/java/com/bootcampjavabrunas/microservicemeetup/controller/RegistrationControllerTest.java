@@ -53,7 +53,7 @@ public class RegistrationControllerTest {
         // cenario
         RegistrationDTO registrationDTOBuilder = createNewRegistration();
         Registration savedRegistration = Registration.builder().id(101)
-                .name("Bruna Silva"). dateOfRegistration("10/10/2021").registration("001").build();
+                .name("Bruna Silva").dateOfRegistration("10/10/2021").registration("001").build();
 
         // execucao
         BDDMockito.given(registrationService.save(any(Registration.class))).willReturn(savedRegistration);
@@ -78,7 +78,7 @@ public class RegistrationControllerTest {
 
     @Test
     @DisplayName("Should throw an exception when not have data enough for the test")
-    public void createInvalidRegistrationTest() throws Exception{
+    public void createInvalidRegistrationTest() throws Exception {
 
         String json = new ObjectMapper().writeValueAsString(new RegistrationDTO());
 
@@ -96,27 +96,27 @@ public class RegistrationControllerTest {
     @DisplayName("Should throw an exception when try to create a new registration witn a another registration create")
     public void createRegistrationsDuplicatedTest() throws Exception {
 
-    // cenario
-    RegistrationDTO dto = createNewRegistration();
-    String json = new ObjectMapper().writeValueAsString(dto);
+        // cenario
+        RegistrationDTO dto = createNewRegistration();
+        String json = new ObjectMapper().writeValueAsString(dto);
 
-    // execucao
-    BDDMockito.given(registrationService.save(any(Registration.class)))
-            .willThrow(new BusinessException("Registration already created"));
+        // execucao
+        BDDMockito.given(registrationService.save(any(Registration.class)))
+                .willThrow(new BusinessException("Registration already created"));
 
-    MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-            .post(REGISTRATION_API)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .content(json);
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(REGISTRATION_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
 
-    // assert
+        // assert
         mockMvc
-            .perform(request)
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("errors", hasSize(1)))
-            .andExpect(jsonPath("errors[0]").value("Registration already created"));
-}
+                .perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("Registration already created"));
+    }
 
     @Test
     @DisplayName("Should get registration information")
@@ -149,12 +149,12 @@ public class RegistrationControllerTest {
 
     @Test
     @DisplayName("Should return NOT FOUND when the registration doesn't exists")
-    public void registrationNotFoundTest() throws Exception{
+    public void registrationNotFoundTest() throws Exception {
 
         BDDMockito.given(registrationService.getRegistrationById(anyInt())).willReturn(Optional.empty());
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get(REGISTRATION_API.concat("/" +1))
+                .get(REGISTRATION_API.concat("/" + 1))
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
@@ -163,14 +163,14 @@ public class RegistrationControllerTest {
 
     @Test
     @DisplayName("Should delete the registration")
-    public void deleteRegistrationTest() throws Exception{
+    public void deleteRegistrationTest() throws Exception {
 
         BDDMockito.given(registrationService
-                .getRegistrationById(anyInt()))
+                        .getRegistrationById(anyInt()))
                 .willReturn(Optional.of(Registration.builder().id(11).build()));
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete(REGISTRATION_API.concat("/" +1))
+                .delete(REGISTRATION_API.concat("/" + 1))
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
@@ -179,26 +179,84 @@ public class RegistrationControllerTest {
 
     @Test
     @DisplayName("Should return resource NOT FOUND when none registration is found to delete")
-    public void deleteNoneExistentRegistrationTest() throws Exception{
+    public void deleteNoneExistentRegistrationTest() throws Exception {
 
         BDDMockito.given(registrationService
                 .getRegistrationById(anyInt())).willReturn(Optional.empty());
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete(REGISTRATION_API.concat("/" +1))
+                .delete(REGISTRATION_API.concat("/" + 1))
                 .accept(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("Should update when registration info")
+    public void updateRegistrationTest() throws Exception {
 
+        Integer id = 11;
+        String json = new ObjectMapper().writeValueAsString(createNewRegistration());
 
+        Registration updatingRegistration =
+                Registration.builder()
+                        .id(id)
+                        .name("Dudavi Silva")
+                        .dateOfRegistration("10/10/2021")
+                        .registration("323")
+                        .build();
 
+        BDDMockito.given(registrationService.getRegistrationById(anyInt()))
+                .willReturn(Optional.of(updatingRegistration));
 
+        // cenario valor atualizado
+        Registration updatedRegistration =
+                Registration.builder()
+                        .id(id)
+                        .name("Bruna Silva")
+                        .dateOfRegistration("10/10/2021")
+                        .registration("323")
+                        .build();
+
+        BDDMockito.given(registrationService
+                        .update(updatingRegistration))
+                .willReturn(updatedRegistration);
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(REGISTRATION_API.concat("/" + 1))
+                .contentType(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(id))
+                .andExpect(jsonPath("name").value(createNewRegistration().getName()))
+                .andExpect(jsonPath("dateOfRegistration").value(createNewRegistration().getDateOfRegistration()))
+                .andExpect(jsonPath("registration").value("323"));
+    }
+
+    @Test
+    @DisplayName("Should return 404 when try to update an registration no existent")
+    public void updateNoExistentRegistrationTest() throws Exception {
+
+        String json = new ObjectMapper().writeValueAsString(createNewRegistration());
+        BDDMockito.given(registrationService.getRegistrationById(anyInt()))
+                .willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put(REGISTRATION_API.concat("/" + 1))
+                .contentType(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isNotFound());
+    }
 
 
     private RegistrationDTO createNewRegistration() {
-        return RegistrationDTO.builder().id(101).name("Bruna Silva"). dateOfRegistration("10/10/2021").registration("001").build();
+        return RegistrationDTO.builder().id(101).name("Bruna Silva").dateOfRegistration("10/10/2021").registration("001").build();
     }
 }
