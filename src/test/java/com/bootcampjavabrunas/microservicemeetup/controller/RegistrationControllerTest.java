@@ -147,6 +147,54 @@ public class RegistrationControllerTest {
                 .andExpect(jsonPath("registration").value(createNewRegistration().getRegistration()));
     }
 
+    @Test
+    @DisplayName("Should return NOT FOUND when the registration doesn't exists")
+    public void registrationNotFoundTest() throws Exception{
+
+        BDDMockito.given(registrationService.getRegistrationById(anyInt())).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get(REGISTRATION_API.concat("/" +1))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Should delete the registration")
+    public void deleteRegistrationTest() throws Exception{
+
+        BDDMockito.given(registrationService
+                .getRegistrationById(anyInt()))
+                .willReturn(Optional.of(Registration.builder().id(11).build()));
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(REGISTRATION_API.concat("/" +1))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Should return resource NOT FOUND when none registration is found to delete")
+    public void deleteNoneExistentRegistrationTest() throws Exception{
+
+        BDDMockito.given(registrationService
+                .getRegistrationById(anyInt())).willReturn(Optional.empty());
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(REGISTRATION_API.concat("/" +1))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isNotFound());
+    }
+
+
+
+
 
 
 
