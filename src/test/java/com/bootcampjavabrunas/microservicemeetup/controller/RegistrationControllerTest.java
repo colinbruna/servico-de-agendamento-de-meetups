@@ -1,7 +1,8 @@
 package com.bootcampjavabrunas.microservicemeetup.controller;
 
+import com.bootcampjavabrunas.microservicemeetup.controller.resource.RegistrationController;
 import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.model.RegistrationDTO;
+import com.bootcampjavabrunas.microservicemeetup.controller.dto.RegistrationDTO;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
 import com.bootcampjavabrunas.microservicemeetup.service.RegistrationService;
 import com.fasterxml.jackson.databind.ObjectMapper;

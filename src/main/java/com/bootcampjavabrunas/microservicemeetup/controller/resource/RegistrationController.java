@@ -1,10 +1,9 @@
-package com.bootcampjavabrunas.microservicemeetup.controller;
+package com.bootcampjavabrunas.microservicemeetup.controller.resource;
 
-import com.bootcampjavabrunas.microservicemeetup.model.RegistrationDTO;
+import com.bootcampjavabrunas.microservicemeetup.controller.dto.RegistrationDTO;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
 import com.bootcampjavabrunas.microservicemeetup.service.RegistrationService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
