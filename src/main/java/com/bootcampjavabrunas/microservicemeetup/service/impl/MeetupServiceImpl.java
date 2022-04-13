@@ -1,6 +1,7 @@
 package com.bootcampjavabrunas.microservicemeetup.service.impl;
 
 import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupFilterDTO;
+import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
 import com.bootcampjavabrunas.microservicemeetup.repository.MeetupRepository;
@@ -22,6 +23,10 @@ public class MeetupServiceImpl implements MeetupService {
 
     @Override
     public Meetup save(Meetup meetup) {
+
+        if (repository.existsByEvent(meetup.getEvent())) {
+            throw new BusinessException("Meetup already created");
+        }
         return repository.save(meetup);
     }
 

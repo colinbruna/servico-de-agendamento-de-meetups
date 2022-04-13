@@ -12,9 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.OPTIONAL;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -93,6 +91,6 @@ public class RegistrationRepositoryTest {
     }
 
     private Registration createNewRegistration(String registration) {
-        return Registration.builder().name("Bruna Silva").dateOfRegistration("10/10/2021"). registration(registration).build();
+        return Registration.builder().name("Bruna Silva").dateOfRegistration("10/10/2021").registration(registration).build();
     }
 }

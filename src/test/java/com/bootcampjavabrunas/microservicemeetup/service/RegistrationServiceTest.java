@@ -41,7 +41,7 @@ public class RegistrationServiceTest {
 
     @Test
     @DisplayName("Should save an registration")
-    public void saveStudentTest() {
+    public void saveRegistrationTest() {
 
         // cenario
         Registration registration = createValidRegistration();
