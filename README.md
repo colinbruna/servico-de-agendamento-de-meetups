@@ -21,12 +21,12 @@ Consiste num pequeno microservice que terá lado de client e server no momento d
 - [x] Testes de contrato no controller
 - [x] Testes unitarios no repository
 - [x] Implementação do repository
-- [ ] Swagger
-- [ ] Testes locais via postman
-- [ ] Deploy no azure
+- [x] Swagger
+- [x] Testes locais via postman
+- [x] Deploy no azure
 
 ## TODO Alunas - camada Meetup
 
 - [ ] Testes do repository
 - [ ] Testes do controller
-- [ ] Testes do service
+- [x] Testes do service

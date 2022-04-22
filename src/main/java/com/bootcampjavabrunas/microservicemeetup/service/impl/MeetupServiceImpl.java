@@ -36,13 +36,24 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Meetup update(Meetup loan) {
-        return repository.save(loan);
+    public void delete(Meetup meetup) {
+        if (meetup == null || meetup.getId() == null) {
+            throw new IllegalArgumentException("Meetup id cannot be null");
+        }
+        this.repository.delete(meetup);
     }
 
     @Override
-    public Page<Meetup> find(MeetupFilterDTO filterDTO, Pageable pageable) {
-        return repository.findByRegistrationOnMeetup( filterDTO.getRegistration(), filterDTO.getEvent(), pageable );
+    public Meetup update(Meetup meetup) {
+        if (meetup == null || meetup.getId() == null) {
+            throw new IllegalArgumentException("Meetup id cannot be null");
+        }
+        return this.repository.save(meetup);
+    }
+
+    @Override
+    public Page<Meetup> find(MeetupFilterDTO dto, Pageable pageable) {
+        return repository.findByRegistrationOnMeetup(dto.getRegistration(), dto.getEvent(), pageable);
     }
 
     @Override
