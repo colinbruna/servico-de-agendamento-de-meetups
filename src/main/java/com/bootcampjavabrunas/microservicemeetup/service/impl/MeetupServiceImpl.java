@@ -31,7 +31,7 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Optional<Meetup> getById(Integer id) {
+    public Optional<Meetup> getMeetupById(Integer id) {
         return repository.findById(id);
     }
 

@@ -12,7 +12,7 @@ public interface MeetupService {
 
     Meetup save(Meetup meetup);
 
-    Optional<Meetup> getById(Integer id);
+    Optional<Meetup> getMeetupById(Integer id);
 
     void delete(Meetup meetup);
 

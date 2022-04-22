@@ -79,7 +79,7 @@ public class MeetupServiceTest {
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(meetup));
 
         // execucao
-        Optional<Meetup> foundMeetup = meetupService.getById(id);
+        Optional<Meetup> foundMeetup = meetupService.getMeetupById(id);
 
         // assert
         assertThat(foundMeetup.isPresent()).isTrue();
@@ -95,7 +95,7 @@ public class MeetupServiceTest {
         Integer id = 100;
         Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Optional<Meetup> meetup = meetupService.getById(id);
+        Optional<Meetup> meetup = meetupService.getMeetupById(id);
 
         assertThat(meetup.isPresent()).isFalse();
     }
