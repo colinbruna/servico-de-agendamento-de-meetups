@@ -22,7 +22,6 @@ Consiste num pequeno microservice que terá lado de client e server no momento d
 - [x] Testes unitarios no repository
 - [x] Implementação do repository
 - [x] Swagger
-- [x] Testes locais via postman
 - [x] Deploy no azure
 
 ## TODO Alunas - camada Meetup
