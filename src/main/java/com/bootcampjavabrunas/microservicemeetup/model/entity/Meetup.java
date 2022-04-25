@@ -30,5 +30,8 @@ public class Meetup {
     private String meetupDate;
 
     @Column
+    private String registrationAttribute;
+
+    @Column
     private Boolean registered;
 }

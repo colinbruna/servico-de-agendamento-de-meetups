@@ -65,12 +65,22 @@ public class MeetupController {
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MeetupDTO get (@PathVariable Integer id) {
+    public MeetupDTO get(@PathVariable Integer id) {
 
         return meetupService
                 .getMeetupById(id)
                 .map(meetup -> modelMapper.map(meetup, MeetupDTO.class))
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("{id}")
+    public MeetupDTO update(@PathVariable Integer id, MeetupDTO meetupDTO) {
+        return meetupService.getMeetupById(id).map(meetup -> {
+            meetup.setRegistrationAttribute(meetupDTO.getRegistrationAttribute());
+            meetup.setEvent(meetupDTO.getEvent());
+            meetup = meetupService.update(meetup);
+            return modelMapper.map(meetup, MeetupDTO.class);
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("{id}")
