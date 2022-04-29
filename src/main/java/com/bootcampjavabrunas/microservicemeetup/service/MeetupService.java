@@ -2,7 +2,7 @@ package com.bootcampjavabrunas.microservicemeetup.service;
 
 import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupFilterDTO;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,5 +20,5 @@ public interface MeetupService {
 
     Page<Meetup> find(MeetupFilterDTO filterDTO, Pageable pageable);
 
-    Page<Meetup> getRegistrationsByMeetup(Registration registration, Pageable pageable);
+    Page<Meetup> getRegistrationsByMeetup(PersonRegistration registration, Pageable pageable);
 }

@@ -24,7 +24,7 @@ public class Meetup {
     @JoinColumn(name = "id_registration")
     @ManyToOne
     // registro só pode ir em um meetup
-    private Registration registration;
+    private PersonRegistration registration;
 
     @Column
     private String meetupDate;

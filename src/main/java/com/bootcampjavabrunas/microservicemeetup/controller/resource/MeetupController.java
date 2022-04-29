@@ -2,11 +2,11 @@ package com.bootcampjavabrunas.microservicemeetup.controller.resource;
 
 import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupDTO;
 import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupFilterDTO;
-import com.bootcampjavabrunas.microservicemeetup.controller.dto.RegistrationDTO;
+import com.bootcampjavabrunas.microservicemeetup.controller.dto.PersonRegistrationDTO;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
 import com.bootcampjavabrunas.microservicemeetup.service.MeetupService;
-import com.bootcampjavabrunas.microservicemeetup.service.RegistrationService;
+import com.bootcampjavabrunas.microservicemeetup.service.PersonRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
 public class MeetupController {
 
     private final MeetupService meetupService;
-    private final RegistrationService registrationService;
+    private final PersonRegistrationService registrationService;
     private final ModelMapper modelMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     private Integer create(@RequestBody MeetupDTO meetupDTO) {
 
-        Registration registration = registrationService.getRegistrationByRegistrationAttribute(meetupDTO.getRegistrationAttribute())
+        PersonRegistration registration = registrationService.getRegistrationByRegistrationAttribute(meetupDTO.getRegistrationAttribute())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         Meetup entity = Meetup.builder()
                 .registration(registration)
@@ -52,8 +52,8 @@ public class MeetupController {
                 .stream()
                 .map(entity -> {
 
-                    Registration registration = entity.getRegistration();
-                    RegistrationDTO registrationDTO = modelMapper.map(registration, RegistrationDTO.class);
+                    PersonRegistration registration = entity.getRegistration();
+                    PersonRegistrationDTO registrationDTO = modelMapper.map(registration, PersonRegistrationDTO.class);
 
                     MeetupDTO meetupDTO = modelMapper.map(entity, MeetupDTO.class);
                     meetupDTO.setRegistration(registrationDTO);

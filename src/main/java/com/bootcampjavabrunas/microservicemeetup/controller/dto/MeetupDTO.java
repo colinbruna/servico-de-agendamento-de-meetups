@@ -17,5 +17,5 @@ public class MeetupDTO {
 
     private String event;
 
-    private RegistrationDTO registration;
+    private PersonRegistrationDTO registration;
 }

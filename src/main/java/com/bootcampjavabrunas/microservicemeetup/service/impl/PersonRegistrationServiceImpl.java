@@ -1,24 +1,24 @@
 package com.bootcampjavabrunas.microservicemeetup.service.impl;
 
 import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
-import com.bootcampjavabrunas.microservicemeetup.repository.RegistrationRepository;
-import com.bootcampjavabrunas.microservicemeetup.service.RegistrationService;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.repository.PersonRegistrationRepository;
+import com.bootcampjavabrunas.microservicemeetup.service.PersonRegistrationService;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class RegistrationServiceImpl implements RegistrationService {
+public class PersonRegistrationServiceImpl implements PersonRegistrationService {
 
-    RegistrationRepository repository;
+    PersonRegistrationRepository repository;
 
-    public RegistrationServiceImpl(RegistrationRepository repository) {
+    public PersonRegistrationServiceImpl(PersonRegistrationRepository repository) {
         this.repository = repository;
     }
 
-    public Registration save(Registration registration) {
+    public PersonRegistration save(PersonRegistration registration) {
 
         if (repository.existsByRegistration(registration.getRegistration())) {
             throw new BusinessException("Registration already created");
@@ -28,12 +28,12 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Optional<Registration> getRegistrationById(Integer id) {
+    public Optional<PersonRegistration> getRegistrationById(Integer id) {
         return this.repository.findById(id);
     }
 
     @Override
-    public void delete(Registration registration) {
+    public void delete(PersonRegistration registration) {
         if (registration == null || registration.getId() == null) {
             throw new IllegalArgumentException("Registration id cannot be null");
         }
@@ -41,7 +41,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Registration update(Registration registration) {
+    public PersonRegistration update(PersonRegistration registration) {
         if (registration == null || registration.getId() == null) {
             throw new IllegalArgumentException("Registration id cannot be null");
         }
@@ -49,8 +49,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Page<Registration> find(Registration filter, Pageable pageRequest) {
-        Example<Registration> example = Example.of(filter,
+    public Page<PersonRegistration> find(PersonRegistration filter, Pageable pageRequest) {
+        Example<PersonRegistration> example = Example.of(filter,
                 ExampleMatcher
                         .matching()
                         .withIgnoreCase()
@@ -61,7 +61,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Optional<Registration> getRegistrationByRegistrationAttribute(String registrationAttribute) {
+    public Optional<PersonRegistration> getRegistrationByRegistrationAttribute(String registrationAttribute) {
         return repository.findByRegistration(registrationAttribute);
     }
 }

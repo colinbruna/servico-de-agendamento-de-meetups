@@ -1,9 +1,9 @@
 package com.bootcampjavabrunas.microservicemeetup.service;
 
 import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
-import com.bootcampjavabrunas.microservicemeetup.repository.RegistrationRepository;
-import com.bootcampjavabrunas.microservicemeetup.service.impl.RegistrationServiceImpl;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.repository.PersonRegistrationRepository;
+import com.bootcampjavabrunas.microservicemeetup.service.impl.PersonRegistrationServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,16 +27,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-public class RegistrationServiceTest {
+public class PersonRegistrationServiceTest {
 
-    RegistrationService registrationService;
+    PersonRegistrationService registrationService;
 
     @MockBean
-    RegistrationRepository repository;
+    PersonRegistrationRepository repository;
 
     @BeforeEach
     public void setUp() {
-        this.registrationService = new RegistrationServiceImpl(repository);
+        this.registrationService = new PersonRegistrationServiceImpl(repository);
     }
 
     @Test
@@ -44,13 +44,13 @@ public class RegistrationServiceTest {
     public void saveRegistrationTest() {
 
         // cenario
-        Registration registration = createValidRegistration();
+        PersonRegistration registration = createValidRegistration();
 
         // execucao
         Mockito.when(repository.existsByRegistration(Mockito.anyString())).thenReturn(false);
         Mockito.when(repository.save(registration)).thenReturn(createValidRegistration());
 
-        Registration savedRegistration = registrationService.save(registration);
+        PersonRegistration savedRegistration = registrationService.save(registration);
 
         // assert
         assertThat(savedRegistration.getId()).isEqualTo(101);
@@ -64,7 +64,7 @@ public class RegistrationServiceTest {
             "to save a new registration with a registration duplicated")
     public void shouldNotSaveAsRegistrationDuplicatedTest() {
 
-        Registration registration = createValidRegistration();
+        PersonRegistration registration = createValidRegistration();
         Mockito.when(repository.existsByRegistration(Mockito.any())).thenReturn(true);
 
         Throwable exception = Assertions.catchThrowable( () -> registrationService.save(registration));
@@ -81,12 +81,12 @@ public class RegistrationServiceTest {
 
         // cenario
         Integer id = 11;
-        Registration registration = createValidRegistration();
+        PersonRegistration registration = createValidRegistration();
         registration.setId(id);
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(registration));
 
         // execucao
-        Optional<Registration> foundRegistration = registrationService.getRegistrationById(id);
+        Optional<PersonRegistration> foundRegistration = registrationService.getRegistrationById(id);
 
         // assert
         assertThat(foundRegistration.isPresent()).isTrue();
@@ -103,7 +103,7 @@ public class RegistrationServiceTest {
         Integer id = 11;
         Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
 
-        Optional<Registration> registration = registrationService.getRegistrationById(id);
+        Optional<PersonRegistration> registration = registrationService.getRegistrationById(id);
 
         assertThat(registration.isPresent()).isFalse();
     }
@@ -112,7 +112,7 @@ public class RegistrationServiceTest {
     @DisplayName("Should delete an student")
     public void deleteRegistrationTest() {
 
-        Registration registration = Registration.builder().id(11).build();
+        PersonRegistration registration = PersonRegistration.builder().id(11).build();
 
         assertDoesNotThrow(() -> registrationService.delete(registration));
 
@@ -125,14 +125,14 @@ public class RegistrationServiceTest {
 
         // cenario
         Integer id =11;
-        Registration updatingRegistration = Registration.builder().id(11).build();
+        PersonRegistration updatingRegistration = PersonRegistration.builder().id(11).build();
 
         // execucao
-        Registration updatedRegistration = createValidRegistration();
+        PersonRegistration updatedRegistration = createValidRegistration();
         updatedRegistration.setId(id);
 
         Mockito.when(repository.save(updatingRegistration)).thenReturn(updatedRegistration);
-        Registration registration = registrationService.update(updatingRegistration);
+        PersonRegistration registration = registrationService.update(updatingRegistration);
 
         // assert
         assertThat(registration.getId()).isEqualTo(updatedRegistration.getId());
@@ -146,18 +146,18 @@ public class RegistrationServiceTest {
     public void findRegistrationTest(){
 
         // cenario
-        Registration registration = createValidRegistration();
+        PersonRegistration registration = createValidRegistration();
         PageRequest pageRequest = PageRequest.of(0,10);
 
-        List<Registration> listRegistrations = Arrays.asList(registration);
-        Page<Registration> page = new PageImpl<Registration>(Arrays.asList(registration),
+        List<PersonRegistration> listRegistrations = Arrays.asList(registration);
+        Page<PersonRegistration> page = new PageImpl<PersonRegistration>(Arrays.asList(registration),
                 PageRequest.of(0,10),1);
 
         // execucao
         Mockito.when(repository.findAll(Mockito.any(Example.class), Mockito.any(PageRequest.class)))
                 .thenReturn(page);
 
-        Page<Registration> result = registrationService.find(registration, pageRequest);
+        Page<PersonRegistration> result = registrationService.find(registration, pageRequest);
 
         // assert
         assertThat(result.getTotalElements()).isEqualTo(1);
@@ -173,9 +173,9 @@ public class RegistrationServiceTest {
         String registrationAttribute = "1234";
 
         Mockito.when(repository.findByRegistration(registrationAttribute)).
-                thenReturn(Optional.of(Registration.builder().id(11).registration(registrationAttribute).build()));
+                thenReturn(Optional.of(PersonRegistration.builder().id(11).registration(registrationAttribute).build()));
 
-        Optional<Registration> registration = registrationService.getRegistrationByRegistrationAttribute(registrationAttribute);
+        Optional<PersonRegistration> registration = registrationService.getRegistrationByRegistrationAttribute(registrationAttribute);
 
         assertThat(registration.isPresent()).isTrue();
         assertThat(registration.get().getId()).isEqualTo(11);
@@ -184,9 +184,9 @@ public class RegistrationServiceTest {
         Mockito.verify(repository, Mockito.times(1)).findByRegistration(registrationAttribute);
     }
 
-    private Registration createValidRegistration() {
+    private PersonRegistration createValidRegistration() {
 
-        return Registration.builder()
+        return PersonRegistration.builder()
                 .id(101)
                 .name("Bruna Silva")
                 .dateOfRegistration("01/04/2022")

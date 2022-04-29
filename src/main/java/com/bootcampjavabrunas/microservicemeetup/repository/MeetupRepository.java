@@ -1,7 +1,7 @@
 package com.bootcampjavabrunas.microservicemeetup.repository;
 
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +19,7 @@ public interface MeetupRepository extends JpaRepository<Meetup, Integer> {
             Pageable pageable
     );
 
-    Page<Meetup> findByRegistration(Registration registration, Pageable pageable);
+    Page<Meetup> findByRegistration(PersonRegistration registration, Pageable pageable);
 
     boolean existsByEvent(String event);
 

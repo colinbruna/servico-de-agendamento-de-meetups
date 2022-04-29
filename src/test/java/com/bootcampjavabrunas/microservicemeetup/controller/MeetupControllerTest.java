@@ -4,9 +4,9 @@ import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupDTO;
 import com.bootcampjavabrunas.microservicemeetup.controller.resource.MeetupController;
 import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
 import com.bootcampjavabrunas.microservicemeetup.service.MeetupService;
-import com.bootcampjavabrunas.microservicemeetup.service.RegistrationService;
+import com.bootcampjavabrunas.microservicemeetup.service.PersonRegistrationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +40,7 @@ public class MeetupControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    private RegistrationService registrationService;
+    private PersonRegistrationService registrationService;
 
     @MockBean
     private MeetupService meetupService;
@@ -53,7 +53,7 @@ public class MeetupControllerTest {
         MeetupDTO dto = MeetupDTO.builder().registrationAttribute("123").event("Womakerscode Dados").build();
         String json = new ObjectMapper().writeValueAsString(dto);
 
-        Registration registration = Registration.builder().id(11).registration("123").build();
+        PersonRegistration registration = PersonRegistration.builder().id(11).registration("123").build();
 
         BDDMockito.given(registrationService.getRegistrationByRegistrationAttribute("123")).
                 willReturn(Optional.of(registration));
@@ -100,7 +100,7 @@ public class MeetupControllerTest {
         String json = new ObjectMapper().writeValueAsString(dto);
 
 
-        Registration registration = Registration.builder().id(11).name("Ana Neri").registration("123").build();
+        PersonRegistration registration = PersonRegistration.builder().id(11).name("Ana Neri").registration("123").build();
         BDDMockito.given(registrationService.getRegistrationByRegistrationAttribute("123"))
                 .willReturn(Optional.of(registration));
 

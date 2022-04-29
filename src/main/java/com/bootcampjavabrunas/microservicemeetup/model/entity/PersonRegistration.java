@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table
-public class Registration {
+public class PersonRegistration {
 
     @Id
     @Column(name = "registration_id")

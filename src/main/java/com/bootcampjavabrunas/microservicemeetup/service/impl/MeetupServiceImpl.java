@@ -3,7 +3,7 @@ package com.bootcampjavabrunas.microservicemeetup.service.impl;
 import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupFilterDTO;
 import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
 import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Registration;
+import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
 import com.bootcampjavabrunas.microservicemeetup.repository.MeetupRepository;
 import com.bootcampjavabrunas.microservicemeetup.service.MeetupService;
 import org.springframework.data.domain.Page;
@@ -57,7 +57,7 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Page<Meetup> getRegistrationsByMeetup(Registration registration, Pageable pageable) {
+    public Page<Meetup> getRegistrationsByMeetup(PersonRegistration registration, Pageable pageable) {
         return repository.findByRegistration(registration, pageable);
     }
 }
