@@ -90,4 +90,3 @@ public class MeetupController {
         meetupService.delete(meetup);
     }
 }
-
