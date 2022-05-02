@@ -2,7 +2,7 @@
 
 ## Projeto
 
-Consiste num pequeno microservice que terá lado de client e server no momento de se cadastrar num meetup.
+Consiste num pequeno microsserviço que terá lado de registro de pessoas e o servidor no momento de se cadastrar num meetup.
 
 ## Tecnologias utilizadas
 
@@ -27,5 +27,5 @@ Consiste num pequeno microservice que terá lado de client e server no momento d
 ## TODO Alunas - camada Meetup
 
 - [x] Testes do repository
-- [ ] Testes do controller
+- [x] Testes do controller
 - [x] Testes do service

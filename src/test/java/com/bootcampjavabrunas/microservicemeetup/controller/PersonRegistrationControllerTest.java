@@ -94,7 +94,7 @@ public class PersonRegistrationControllerTest {
     }
 
     @Test
-    @DisplayName("Should throw an exception when try to create a new registration witn a another registration create")
+    @DisplayName("Should throw an exception when try to create a new registration with a another registration create")
     public void createRegistrationsDuplicatedTest() throws Exception {
 
         // cenario
@@ -194,7 +194,7 @@ public class PersonRegistrationControllerTest {
     }
 
     @Test
-    @DisplayName("Should update when registration info")
+    @DisplayName("Should update the registration info")
     public void updateRegistrationTest() throws Exception {
 
         Integer id = 11;

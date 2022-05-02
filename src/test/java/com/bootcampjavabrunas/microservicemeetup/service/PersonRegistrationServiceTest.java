@@ -62,7 +62,7 @@ public class PersonRegistrationServiceTest {
     @Test
     @DisplayName("Should throw business error when try " +
             "to save a new registration with a registration duplicated")
-    public void shouldNotSaveAsRegistrationDuplicatedTest() {
+    public void notSaveAsRegistrationDuplicatedTest() {
 
         PersonRegistration registration = createValidRegistration();
         Mockito.when(repository.existsByRegistration(Mockito.any())).thenReturn(true);
@@ -97,7 +97,7 @@ public class PersonRegistrationServiceTest {
     }
 
     @Test
-    @DisplayName("Should return empty when get an registrstion by id when doesn't exists")
+    @DisplayName("Should return empty when get an registration by id when doesn't exists")
     public void registrationNotFoundByIdTest() {
 
         Integer id = 11;
