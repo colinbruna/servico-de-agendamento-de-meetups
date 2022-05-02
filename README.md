@@ -22,10 +22,10 @@ Consiste num pequeno microservice que terá lado de client e server no momento d
 - [x] Testes unitarios no repository
 - [x] Implementação do repository
 - [x] Swagger
-- [x] Deploy no azure
+- [x] [Deploy no azure](https://agendamento-de-meetups.azurewebsites.net/swagger-ui/#/)
 
 ## TODO Alunas - camada Meetup
 
-- [ ] Testes do repository
+- [x] Testes do repository
 - [ ] Testes do controller
 - [x] Testes do service

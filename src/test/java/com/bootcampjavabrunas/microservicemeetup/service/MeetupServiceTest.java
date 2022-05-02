@@ -70,7 +70,7 @@ public class MeetupServiceTest {
 
     @Test
     @DisplayName("Should get an meetup by Id")
-    public void getByMeetupIdTest() {
+    public void getMeetupByIdTest() {
 
         // cenario
         Integer id = 200;

@@ -77,7 +77,7 @@ public class PersonRegistrationServiceTest {
 
     @Test
     @DisplayName("Should get an registration by Id")
-    public void getByRegistrationIdTest() {
+    public void getRegistrationByIdTest() {
 
         // cenario
         Integer id = 11;
@@ -109,7 +109,7 @@ public class PersonRegistrationServiceTest {
     }
 
     @Test
-    @DisplayName("Should delete an student")
+    @DisplayName("Should delete an registration")
     public void deleteRegistrationTest() {
 
         PersonRegistration registration = PersonRegistration.builder().id(11).build();
@@ -143,7 +143,7 @@ public class PersonRegistrationServiceTest {
 
     @Test
     @DisplayName("Should filter registrations must by properties")
-    public void findRegistrationTest(){
+    public void findRegistrationByPropertiesTest(){
 
         // cenario
         PersonRegistration registration = createValidRegistration();

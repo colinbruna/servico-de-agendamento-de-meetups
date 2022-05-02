@@ -25,7 +25,9 @@ import java.util.stream.Collectors;
 public class MeetupController {
 
     private final MeetupService meetupService;
+
     private final PersonRegistrationService registrationService;
+
     private final ModelMapper modelMapper;
 
     @PostMapping

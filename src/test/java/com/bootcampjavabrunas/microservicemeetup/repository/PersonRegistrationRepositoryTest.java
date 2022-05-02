@@ -41,7 +41,7 @@ public class PersonRegistrationRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should returnfalse when doesn't exists an registration_attribute with a registration already created")
+    @DisplayName("Should return false when doesn't exists an registration_attribute with a registration already created")
     public void returnFalseWhenRegistrationAttributeDoesntExistsTest() {
 
         String registration = "123";
@@ -76,7 +76,7 @@ public class PersonRegistrationRepositoryTest {
 
     @Test
     @DisplayName("Should delete a registration from the base")
-    public void deleteRegistration() {
+    public void deleteRegistrationTest() {
 
         PersonRegistration registration_attribute = createNewRegistration("323");
         entityManager.persist(registration_attribute);
