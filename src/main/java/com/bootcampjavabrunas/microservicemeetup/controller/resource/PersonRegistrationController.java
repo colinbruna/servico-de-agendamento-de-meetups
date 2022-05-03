@@ -56,10 +56,11 @@ public class PersonRegistrationController {
     }
 
     @PutMapping("{id}")
-    public PersonRegistrationDTO update(@PathVariable Integer id, PersonRegistrationDTO registrationDTO) {
+    public PersonRegistrationDTO update(@PathVariable Integer id, @RequestBody @Valid PersonRegistrationDTO registrationDTO) {
         return registrationService.getRegistrationById(id).map(registration -> {
             registration.setName(registrationDTO.getName());
             registration.setDateOfRegistration(registrationDTO.getDateOfRegistration());
+            registration.setRegistration(registrationDTO.getRegistration());
             registration = registrationService.update(registration);
 
             return modelMapper.map(registration, PersonRegistrationDTO.class);
