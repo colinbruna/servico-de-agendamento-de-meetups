@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,8 @@ public class MeetupController {
         Meetup entity = Meetup.builder()
                 .registration(registration)
                 .event(meetupDTO.getEvent())
-                .meetupDate("10/10/2021")
+                .registrationAttribute(meetupDTO.getRegistrationAttribute())
+                .meetupDate("30/05/2022")
                 .build();
 
         entity = meetupService.save(entity);
@@ -76,7 +78,7 @@ public class MeetupController {
     }
 
     @PutMapping("{id}")
-    public MeetupDTO update(@PathVariable Integer id, MeetupDTO meetupDTO) {
+    public MeetupDTO update(@PathVariable Integer id, @RequestBody @Valid MeetupDTO meetupDTO) {
         return meetupService.getMeetupById(id).map(meetup -> {
             meetup.setRegistrationAttribute(meetupDTO.getRegistrationAttribute());
             meetup.setEvent(meetupDTO.getEvent());

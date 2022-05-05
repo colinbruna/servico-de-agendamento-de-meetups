@@ -226,7 +226,7 @@ public class PersonRegistrationControllerTest {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .put(REGISTRATION_API.concat("/" + 1))
-                .contentType(json)
+                .content(json)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -248,7 +248,7 @@ public class PersonRegistrationControllerTest {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .put(REGISTRATION_API.concat("/" + 1))
-                .contentType(json)
+                .content(json)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

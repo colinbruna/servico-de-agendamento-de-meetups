@@ -53,7 +53,11 @@ public class MeetupServiceImpl implements MeetupService {
 
     @Override
     public Page<Meetup> find(MeetupFilterDTO dto, Pageable pageable) {
-        return repository.findByRegistrationOnMeetup(dto.getRegistration(), dto.getEvent(), pageable);
+        if (dto.getRegistration() != null && dto.getEvent() != null) {
+            return repository.findByRegistrationOnMeetup(dto.getRegistration(), dto.getEvent(), pageable);
+        }
+
+        return repository.findAll(pageable);
     }
 
     @Override
