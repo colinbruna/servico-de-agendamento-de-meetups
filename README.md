@@ -15,13 +15,14 @@ Consiste num pequeno microsserviço que terá lado de registro de pessoas e o se
 
 ## TODO list
 
-- [x] Implementação da classe se servico
+- [x] Implementação da classe de serviço
 - [x] Testes no service
-- [x] Implementação da classe de controlle da web
+- [x] Implementação da classe de controller da web
 - [x] Testes de contrato no controller
-- [x] Testes unitarios no repository
+- [x] Testes unitários no repository
 - [x] Implementação do repository
 - [x] Swagger
+- [x] Testes locais via postman
 - [x] [Deploy no azure](https://agendamento-de-meetups.azurewebsites.net/swagger-ui/#/)
 
 ## TODO Alunas - camada Meetup
