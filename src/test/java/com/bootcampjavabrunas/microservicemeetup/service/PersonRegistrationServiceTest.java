@@ -1,9 +1,10 @@
 package com.bootcampjavabrunas.microservicemeetup.service;
 
-import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
-import com.bootcampjavabrunas.microservicemeetup.repository.PersonRegistrationRepository;
-import com.bootcampjavabrunas.microservicemeetup.service.impl.PersonRegistrationServiceImpl;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.personRegistration.PersonRegistrationRepository;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.impl.personRegistration.PersonRegistrationServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

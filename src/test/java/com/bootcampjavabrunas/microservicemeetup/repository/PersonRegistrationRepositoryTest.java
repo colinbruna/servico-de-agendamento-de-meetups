@@ -1,6 +1,7 @@
 package com.bootcampjavabrunas.microservicemeetup.repository;
 
-import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.personRegistration.PersonRegistrationRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

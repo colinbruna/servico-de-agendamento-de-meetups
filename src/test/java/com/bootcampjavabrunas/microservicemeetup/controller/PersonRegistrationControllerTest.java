@@ -1,10 +1,10 @@
 package com.bootcampjavabrunas.microservicemeetup.controller;
 
-import com.bootcampjavabrunas.microservicemeetup.controller.resource.PersonRegistrationController;
-import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.controller.dto.PersonRegistrationDTO;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
-import com.bootcampjavabrunas.microservicemeetup.service.PersonRegistrationService;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationController;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.dto.PersonRegistrationDTO;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;

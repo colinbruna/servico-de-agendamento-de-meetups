@@ -1,9 +1,10 @@
 package com.bootcampjavabrunas.microservicemeetup.service;
 
-import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.repository.MeetupRepository;
-import com.bootcampjavabrunas.microservicemeetup.service.impl.MeetupServiceImpl;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupService;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
+import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.meetup.MeetupRepository;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.impl.meetup.MeetupServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

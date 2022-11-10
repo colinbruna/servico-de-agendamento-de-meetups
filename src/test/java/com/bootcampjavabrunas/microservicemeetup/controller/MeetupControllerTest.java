@@ -1,12 +1,12 @@
 package com.bootcampjavabrunas.microservicemeetup.controller;
 
-import com.bootcampjavabrunas.microservicemeetup.controller.dto.MeetupDTO;
-import com.bootcampjavabrunas.microservicemeetup.controller.resource.MeetupController;
-import com.bootcampjavabrunas.microservicemeetup.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.model.entity.PersonRegistration;
-import com.bootcampjavabrunas.microservicemeetup.service.MeetupService;
-import com.bootcampjavabrunas.microservicemeetup.service.PersonRegistrationService;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.dto.MeetupDTO;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupController;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupService;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
