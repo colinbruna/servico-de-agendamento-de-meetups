@@ -15,8 +15,7 @@ public class Meetup {
 
     @Id
     private ObjectId id;
-
-    private String event;
-
-    private String meetupDate;
+    private String eventName;
+    private String eventDate;
+    private String place;
 }

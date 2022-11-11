@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MeetupDTO {
 
-    private String event;
-
-    private String meetupDate;
+    private String eventName;
+    private String eventDate;
+    private String place;
 }
