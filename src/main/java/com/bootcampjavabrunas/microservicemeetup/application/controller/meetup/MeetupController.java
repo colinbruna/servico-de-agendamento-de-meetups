@@ -1,76 +1,68 @@
 package com.bootcampjavabrunas.microservicemeetup.application.controller.meetup;
 
 import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.dto.MeetupDTO;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.dto.converter.MeetupConverter;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
 import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/meetups")
 @RequiredArgsConstructor
 public class MeetupController {
 
-    private final MeetupService meetupService;
+    private final MeetupService service;
 
     private final PersonRegistrationService registrationService;
 
-    private final ModelMapper modelMapper;
+    private final MeetupConverter converter;
 
     @PostMapping
     public ResponseEntity<MeetupDTO> create(@RequestBody MeetupDTO meetupDTO) {
-        Meetup meetup = modelMapper.map(meetupDTO, Meetup.class);
-        Meetup meetupSalvo = meetupService.save(meetup);
-        return new ResponseEntity<>(modelMapper.map(meetupSalvo, MeetupDTO.class), HttpStatus.CREATED);
+        Meetup meetup = converter.convertToMeetup(meetupDTO);
+        return new ResponseEntity<>(converter.convertToDto(service.save(meetup)), HttpStatus.CREATED);
     }
 
-//    @GetMapping
-//    public Page<MeetupDTO> find(MeetupFilterDTO dto, Pageable pageRequest) {
-//        Page<Meetup> result = meetupService.find(dto, pageRequest);
-//        List<MeetupDTO> meetups = result
-//                .getContent()
-//                .stream()
-//                .map(entity -> {
-//
-//                    PersonRegistration registration = entity.getRegistration();
-//                    PersonRegistrationDTO registrationDTO = modelMapper.map(registration, PersonRegistrationDTO.class);
-//
-//                    MeetupDTO meetupDTO = modelMapper.map(entity, MeetupDTO.class);
-//                    //meetupDTO.setIdPerson(registrationDTO);
-//                    return meetupDTO;
-//
-//                }).collect(Collectors.toList());
-//        return new PageImpl<MeetupDTO>(meetups, pageRequest, result.getTotalElements());
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<MeetupDTO> update(@PathVariable ObjectId id, @RequestBody @Valid MeetupDTO meetupDTO) {
+        Meetup meetup = converter.convertToMeetup(meetupDTO);
+        Meetup meetupUpdated = service.update(id, meetup);
 
-//    @GetMapping("{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public MeetupDTO get(@PathVariable Integer id) {
-//
-//        return meetupService
-//                .getMeetupById(id)
-//                .map(meetup -> modelMapper.map(meetup, MeetupDTO.class))
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
+        return meetupUpdated == null?
+                ResponseEntity.notFound().build():
+                ResponseEntity.ok(converter.convertToDto(meetupUpdated));
+    }
 
-//    @PutMapping("{id}")
-//    public MeetupDTO update(@PathVariable Integer id, @RequestBody @Valid MeetupDTO meetupDTO) {
-//        return meetupService.getMeetupById(id).map(meetup -> {
-//            meetup.setRegistrationAttribute(meetupDTO.getRegistrationAttribute());
-//            meetup.setEvent(meetupDTO.getEvent());
-//            meetup = meetupService.update(meetup);
-//            return modelMapper.map(meetup, MeetupDTO.class);
-//        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<MeetupDTO> find(@PathVariable ObjectId id) {
+        Meetup meetup = service.find(id);
 
-//    @DeleteMapping("{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void deleteByMeetupId(@PathVariable ObjectId id) {
-//        Meetup meetup = meetupService.getMeetupById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//        meetupService.delete(meetup);
-//    }
+        return meetup == null?
+                ResponseEntity.notFound().build():
+                ResponseEntity.ok(converter.convertToDto(meetup));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MeetupDTO> delete(@PathVariable ObjectId id) {
+        if (Objects.isNull(service.find(id))) {
+            return ResponseEntity.notFound().build();
+        }
+
+        service.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MeetupDTO>> findAll() {
+        List<Meetup> meetups = service.findAll();
+        return ResponseEntity.ok(converter.convertToDtoList(meetups));
+    }
 }

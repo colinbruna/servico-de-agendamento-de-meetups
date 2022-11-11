@@ -1,16 +1,12 @@
 package com.bootcampjavabrunas.microservicemeetup.domain.service.impl.meetup;
 
-import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.dto.MeetupFilterDTO;
-import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
-import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
-import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.meetup.MeetupRepository;
 import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupService;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
+import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.meetup.MeetupRepository;
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,46 +19,33 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Meetup save(Meetup meetup) {
+    public Meetup save(Meetup meetup) { return repository.save(meetup); }
 
-//        if (repository.existsByEvent(meetup.getEvent())) {
-//            throw new BusinessException("Meetup already created");
-//        }
-        return repository.save(meetup);
+    @Override
+    public Meetup update(ObjectId id, Meetup meetup) {
+        Optional<Meetup> optionalMeetup = repository.findById(id);
+
+        if (optionalMeetup.isPresent()) {
+            meetup.setId(optionalMeetup.get().getId());
+            return repository.save(meetup);
+        }
+
+        return null;
     }
 
-//    @Override
-//    public Optional<Meetup> getMeetupById(ObjectId id) {
-//        return repository.findById(id);
-//    }
-//
-//    @Override
-//    public void delete(Meetup meetup) {
-//        if (meetup == null || meetup.getId() == null) {
-//            throw new IllegalArgumentException("Meetup id cannot be null");
-//        }
-//        this.repository.delete(meetup);
-//    }
-//
-//    @Override
-//    public Meetup update(Meetup meetup) {
-//        if (meetup == null || meetup.getId() == null) {
-//            throw new IllegalArgumentException("Meetup id cannot be null");
-//        }
-//        return this.repository.save(meetup);
-//    }
-//
-//    @Override
-//    public Page<Meetup> find(MeetupFilterDTO dto, Pageable pageable) {
-//        if (dto.getRegistration() != null && dto.getEvent() != null) {
-//            return repository.findByRegistrationOnMeetup(dto.getRegistration(), dto.getEvent(), pageable);
-//        }
-//
-//        return repository.findAll(pageable);
-//    }
-//
-//    @Override
-//    public Page<Meetup> getRegistrationsByMeetup(PersonRegistration registration, Pageable pageable) {
-//        return repository.findByRegistration(registration, pageable);
-//    }
+    @Override
+    public Meetup find(ObjectId id) {
+        Optional<Meetup> optionalMeetup = repository.findById(id);
+        return optionalMeetup.orElse(null);
+    }
+
+    @Override
+    public void delete(ObjectId id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public List<Meetup> findAll() {
+        return repository.findAll();
+    }
 }
