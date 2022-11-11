@@ -1,26 +1,19 @@
 package com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
-
+@Document(collection = "personRegistration")
 public class PersonRegistration {
 
-
-    private Integer id;
-
-
+    @Id
+    private ObjectId id;
     private String name;
-
-
-    private String dateOfRegistration;
-
-
-    private String registration;
+    private String email;
+    private String dateRegistration;
 }
