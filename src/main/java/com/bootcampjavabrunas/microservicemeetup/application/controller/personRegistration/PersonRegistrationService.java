@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public interface PersonRegistrationService {
 
-    PersonRegistration save(PersonRegistration any);
-
-    Optional<PersonRegistration> getRegistrationById(Integer id);
-
-    void delete(PersonRegistration registration);
-
-    PersonRegistration update(PersonRegistration registration);
-
-    Page<PersonRegistration> find(PersonRegistration filter, Pageable pageRequest);
-
-    Optional<PersonRegistration> getRegistrationByRegistrationAttribute(String registrationAttribute);
+//    PersonRegistration save(PersonRegistration any);
+//
+//    Optional<PersonRegistration> getRegistrationById(Integer id);
+//
+//    void delete(PersonRegistration registration);
+//
+//    PersonRegistration update(PersonRegistration registration);
+//
+//    Page<PersonRegistration> find(PersonRegistration filter, Pageable pageRequest);
+//
+//    Optional<PersonRegistration> getRegistrationByRegistrationAttribute(String registrationAttribute);
 }

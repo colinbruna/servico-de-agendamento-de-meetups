@@ -1,13 +1,13 @@
 package com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.personRegistration;
 
 import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.Optional;
 
-public interface PersonRegistrationRepository extends JpaRepository<PersonRegistration, Integer> {
+public interface PersonRegistrationRepository extends MongoRepository<PersonRegistration, ObjectId> {
 
-    boolean existsByRegistration(String registration);
-
-    Optional<PersonRegistration> findByRegistration(String registrationAtrb);
+//    boolean existsByRegistration(String registration);
+//
+//    Optional<PersonRegistration> findByRegistration(String registrationAtrb);
 }

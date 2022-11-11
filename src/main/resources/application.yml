@@ -1,0 +1,9 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: AgendaMeetups
