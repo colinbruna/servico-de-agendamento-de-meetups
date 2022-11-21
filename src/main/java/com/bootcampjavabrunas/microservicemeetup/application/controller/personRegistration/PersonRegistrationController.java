@@ -4,13 +4,13 @@ import com.bootcampjavabrunas.microservicemeetup.application.controller.personRe
 import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.dto.converter.PersonRegistrationConverter;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/registration")
@@ -26,47 +26,41 @@ public class PersonRegistrationController {
         return new ResponseEntity<>(converter.convertToDto(service.save(personRegistration)), HttpStatus.CREATED);
     }
 
-//    @GetMapping("{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public PersonRegistrationDTO get (@PathVariable Integer id) {
-//
-//        return registrationService
-//                .getRegistrationById(id)
-//                .map(registration -> modelMapper.map(registration, PersonRegistrationDTO.class))
-//                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
-//
-//    @DeleteMapping("{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void deleteByRegistrationId(@PathVariable Integer id) {
-//        PersonRegistration registration = registrationService.getRegistrationById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//        registrationService.delete(registration);
-//    }
-//
-//    @PutMapping("{id}")
-//    public PersonRegistrationDTO update(@PathVariable Integer id, @RequestBody @Valid PersonRegistrationDTO registrationDTO) {
-//        return registrationService.getRegistrationById(id).map(registration -> {
-//            registration.setName(registrationDTO.getName());
-//            registration.setDateOfRegistration(registrationDTO.getDateOfRegistration());
-//            registration.setRegistration(registrationDTO.getRegistration());
-//            registration = registrationService.update(registration);
-//
-//            return modelMapper.map(registration, PersonRegistrationDTO.class);
-//        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//    }
-//
-//    @GetMapping
-//    public Page<PersonRegistrationDTO> find(PersonRegistrationDTO dto, Pageable pageRequest) {
-//        PersonRegistration filter = modelMapper.map(dto, PersonRegistration.class);
-//        Page<PersonRegistration> result = registrationService.find(filter, pageRequest);
-//
-//        List<PersonRegistrationDTO> list = result.getContent()
-//                .stream()
-//                .map(entity -> modelMapper.map(entity, PersonRegistrationDTO.class))
-//                .collect(Collectors.toList());
-//
-//        return new PageImpl<PersonRegistrationDTO>(list, pageRequest, result.getTotalElements());
-//    }
+    @PutMapping("{id}")
+    public ResponseEntity<PersonRegistrationDTO> update(@PathVariable String id,
+                                        @RequestBody @Valid PersonRegistrationDTO registrationDTO) {
+        PersonRegistration personRegistration = converter.convertToPersonRegistration(registrationDTO);
+        PersonRegistration personRegistrationUpdated = service.update(id, personRegistration);
+
+        return personRegistrationUpdated == null?
+                ResponseEntity.notFound().build():
+                ResponseEntity.ok(converter.convertToDto(personRegistrationUpdated));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<PersonRegistrationDTO> find(@PathVariable String id) {
+        PersonRegistration personRegistration = service.find(id);
+
+        return personRegistration == null?
+                ResponseEntity.notFound().build():
+                ResponseEntity.ok(converter.convertToDto(personRegistration));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<PersonRegistrationDTO> delete(@PathVariable String id) {
+        if (Objects.isNull(service.find(id))) {
+            return ResponseEntity.notFound().build();
+        }
+
+        service.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PersonRegistrationDTO>> findAll() {
+        List<PersonRegistration> personRegistrationList = service.findAll();
+        return ResponseEntity.ok(converter.convertToDtoList(personRegistrationList));
+    }
 
     @GetMapping("/meetup/{idMeetup}")
     public ResponseEntity<List<PersonRegistrationDTO>> findByMeetup(@PathVariable String idMeetup) {

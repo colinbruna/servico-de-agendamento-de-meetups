@@ -27,7 +27,8 @@ public class MeetupController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MeetupDTO> update(@PathVariable String id, @RequestBody @Valid MeetupDTO meetupDTO) {
+    public ResponseEntity<MeetupDTO> update(@PathVariable String id,
+                                            @RequestBody @Valid MeetupDTO meetupDTO) {
         Meetup meetup = converter.convertToMeetup(meetupDTO);
         Meetup meetupUpdated = service.update(id, meetup);
 
