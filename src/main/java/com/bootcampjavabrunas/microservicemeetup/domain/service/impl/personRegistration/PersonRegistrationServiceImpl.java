@@ -1,30 +1,37 @@
 package com.bootcampjavabrunas.microservicemeetup.domain.service.impl.personRegistration;
 
-import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupService;
+import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
 import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.personRegistration.PersonRegistrationRepository;
 import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PersonRegistrationServiceImpl implements PersonRegistrationService {
 
-    PersonRegistrationRepository repository;
+    private final PersonRegistrationRepository repository;
+    private final MeetupService meetupService;
 
-    public PersonRegistrationServiceImpl(PersonRegistrationRepository repository) {
+    public PersonRegistrationServiceImpl(PersonRegistrationRepository repository, MeetupService meetupService) {
         this.repository = repository;
+        this.meetupService = meetupService;
     }
 
+    @Override
     public PersonRegistration save(PersonRegistration registration) {
-
-//        if (repository.existsByRegistration(registration.getRegistration())) {
-//            throw new BusinessException("Registration already created");
-//        }
-
+        validateMeetup(registration);
         return repository.save(registration);
+    }
+
+    @Override
+    public List<PersonRegistration> findByMeetup(String idMeetup) {
+        List<PersonRegistration> personRegistrationList = repository.findByIdMeetup(idMeetup);
+        return personRegistrationList;
     }
 
 //    @Override
@@ -64,4 +71,14 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
 //    public Optional<PersonRegistration> getRegistrationByRegistrationAttribute(String registrationAttribute) {
 //        return repository.findByRegistration(registrationAttribute);
 //    }
+
+    private void validateMeetup(final PersonRegistration personRegistration) {
+        Meetup idMeetup = meetupService.find(personRegistration.getIdMeetup());
+        if (Objects.isNull(idMeetup)) {
+            throw new RuntimeException("Meetup não encontrado");
+        } else {
+            List<PersonRegistration> personRegistrationList = new ArrayList<>();
+            personRegistrationList.add(personRegistration);
+        }
+    }
 }

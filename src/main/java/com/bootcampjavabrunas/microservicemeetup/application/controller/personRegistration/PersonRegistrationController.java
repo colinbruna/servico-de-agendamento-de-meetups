@@ -1,42 +1,31 @@
 package com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration;
 
 import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.dto.PersonRegistrationDTO;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.dto.converter.PersonRegistrationConverter;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/registration")
+@RequiredArgsConstructor
 public class PersonRegistrationController {
 
-    private PersonRegistrationService registrationService;
+    private final PersonRegistrationService service;
+    private final PersonRegistrationConverter converter;
 
-    private ModelMapper modelMapper;
-
-    public PersonRegistrationController(PersonRegistrationService registrationService, ModelMapper modelMapper) {
-        this.registrationService = registrationService;
-        this.modelMapper = modelMapper;
+    @PostMapping
+    public ResponseEntity<PersonRegistrationDTO> create(@RequestBody @Valid PersonRegistrationDTO registrationDTO) {
+        PersonRegistration personRegistration = converter.convertToPersonRegistration(registrationDTO);
+        return new ResponseEntity<>(converter.convertToDto(service.save(personRegistration)), HttpStatus.CREATED);
     }
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public PersonRegistrationDTO create(@RequestBody @Valid PersonRegistrationDTO registrationDTO) {
-//
-//        PersonRegistration entity = modelMapper.map(registrationDTO, PersonRegistration.class);
-//        entity = registrationService.save(entity);
-//
-//        return modelMapper.map(entity, PersonRegistrationDTO.class);
-//    }
-//
 //    @GetMapping("{id}")
 //    @ResponseStatus(HttpStatus.OK)
 //    public PersonRegistrationDTO get (@PathVariable Integer id) {
@@ -78,4 +67,10 @@ public class PersonRegistrationController {
 //
 //        return new PageImpl<PersonRegistrationDTO>(list, pageRequest, result.getTotalElements());
 //    }
+
+    @GetMapping("/meetup/{idMeetup}")
+    public ResponseEntity<List<PersonRegistrationDTO>> findByMeetup(@PathVariable String idMeetup) {
+        List<PersonRegistration> personRegistrationList = service.findByMeetup(idMeetup);
+        return ResponseEntity.ok(converter.convertToDtoList(personRegistrationList));
+    }
 }

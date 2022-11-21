@@ -16,4 +16,5 @@ public class PersonRegistration {
     private String name;
     private String email;
     private String dateRegistration;
+    private String idMeetup;
 }

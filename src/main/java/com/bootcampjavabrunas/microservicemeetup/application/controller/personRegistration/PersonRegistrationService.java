@@ -4,12 +4,14 @@ import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PersonRegistrationService {
 
-//    PersonRegistration save(PersonRegistration any);
-//
+    PersonRegistration save(PersonRegistration personRegistration);
+
+
 //    Optional<PersonRegistration> getRegistrationById(Integer id);
 //
 //    void delete(PersonRegistration registration);
@@ -19,4 +21,6 @@ public interface PersonRegistrationService {
 //    Page<PersonRegistration> find(PersonRegistration filter, Pageable pageRequest);
 //
 //    Optional<PersonRegistration> getRegistrationByRegistrationAttribute(String registrationAttribute);
+
+    List<PersonRegistration> findByMeetup(String idMeetup);
 }

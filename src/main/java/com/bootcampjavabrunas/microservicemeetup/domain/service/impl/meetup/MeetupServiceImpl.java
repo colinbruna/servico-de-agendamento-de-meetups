@@ -22,8 +22,8 @@ public class MeetupServiceImpl implements MeetupService {
     public Meetup save(Meetup meetup) { return repository.save(meetup); }
 
     @Override
-    public Meetup update(ObjectId id, Meetup meetup) {
-        Optional<Meetup> optionalMeetup = repository.findById(id);
+    public Meetup update(String id, Meetup meetup) {
+        Optional<Meetup> optionalMeetup = repository.findById(new ObjectId(id));
 
         if (optionalMeetup.isPresent()) {
             meetup.setId(optionalMeetup.get().getId());
@@ -34,14 +34,14 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Meetup find(ObjectId id) {
-        Optional<Meetup> optionalMeetup = repository.findById(id);
+    public Meetup find(String id) {
+        Optional<Meetup> optionalMeetup = repository.findById(new ObjectId(id));
         return optionalMeetup.orElse(null);
     }
 
     @Override
-    public void delete(ObjectId id) {
-        repository.deleteById(id);
+    public void delete(String id) {
+        repository.deleteById(new ObjectId(id));
     }
 
     @Override

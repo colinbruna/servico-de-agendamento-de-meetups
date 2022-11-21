@@ -10,4 +10,5 @@ public class PersonRegistrationDTO {
     private String name;
     private String email;
     private String dateRegistration;
+    private String idMeetup;
 }

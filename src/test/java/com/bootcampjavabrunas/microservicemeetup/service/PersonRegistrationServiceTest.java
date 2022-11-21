@@ -37,7 +37,7 @@ public class PersonRegistrationServiceTest {
 
     @BeforeEach
     public void setUp() {
-        this.registrationService = new PersonRegistrationServiceImpl(repository);
+        this.registrationService = new PersonRegistrationServiceImpl(repository, meetupService);
     }
 
     @Test

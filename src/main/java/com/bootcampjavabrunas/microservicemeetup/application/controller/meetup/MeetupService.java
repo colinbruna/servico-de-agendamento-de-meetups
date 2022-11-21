@@ -9,11 +9,11 @@ public interface MeetupService {
 
     Meetup save(Meetup meetup);
 
-    Meetup update(ObjectId id, Meetup meetup);
+    Meetup update(String id, Meetup meetup);
 
-    Meetup find(ObjectId id);
+    Meetup find(String id);
 
-    void delete(ObjectId id);
+    void delete(String id);
 
     List<Meetup> findAll();
 }

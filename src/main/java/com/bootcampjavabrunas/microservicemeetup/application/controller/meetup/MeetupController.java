@@ -3,9 +3,7 @@ package com.bootcampjavabrunas.microservicemeetup.application.controller.meetup;
 import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.dto.MeetupDTO;
 import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.dto.converter.MeetupConverter;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
-import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,19 +18,16 @@ import java.util.Objects;
 public class MeetupController {
 
     private final MeetupService service;
-
-    private final PersonRegistrationService registrationService;
-
     private final MeetupConverter converter;
 
     @PostMapping
-    public ResponseEntity<MeetupDTO> create(@RequestBody MeetupDTO meetupDTO) {
+    public ResponseEntity<MeetupDTO> create(@RequestBody @Valid MeetupDTO meetupDTO) {
         Meetup meetup = converter.convertToMeetup(meetupDTO);
         return new ResponseEntity<>(converter.convertToDto(service.save(meetup)), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MeetupDTO> update(@PathVariable ObjectId id, @RequestBody @Valid MeetupDTO meetupDTO) {
+    public ResponseEntity<MeetupDTO> update(@PathVariable String id, @RequestBody @Valid MeetupDTO meetupDTO) {
         Meetup meetup = converter.convertToMeetup(meetupDTO);
         Meetup meetupUpdated = service.update(id, meetup);
 
@@ -42,7 +37,7 @@ public class MeetupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MeetupDTO> find(@PathVariable ObjectId id) {
+    public ResponseEntity<MeetupDTO> find(@PathVariable String id) {
         Meetup meetup = service.find(id);
 
         return meetup == null?
@@ -51,7 +46,7 @@ public class MeetupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MeetupDTO> delete(@PathVariable ObjectId id) {
+    public ResponseEntity<MeetupDTO> delete(@PathVariable String id) {
         if (Objects.isNull(service.find(id))) {
             return ResponseEntity.notFound().build();
         }
