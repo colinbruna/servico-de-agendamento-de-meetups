@@ -1,7 +1,6 @@
 package com.bootcampjavabrunas.microservicemeetup.application.controller.meetup;
 
 import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 

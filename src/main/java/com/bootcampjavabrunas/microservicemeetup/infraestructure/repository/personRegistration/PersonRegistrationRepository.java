@@ -12,7 +12,4 @@ public interface PersonRegistrationRepository extends MongoRepository<PersonRegi
 
     List<PersonRegistration> findByIdMeetup(String idMeetup);
 
-//    boolean existsByRegistration(String registration);
-//
-//    Optional<PersonRegistration> findByRegistration(String registrationAtrb);
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class MeetupServiceImpl implements MeetupService {
 
-    private MeetupRepository repository;
+    private final MeetupRepository repository;
 
     public MeetupServiceImpl(MeetupRepository repository) {
         this.repository = repository;

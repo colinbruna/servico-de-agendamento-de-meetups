@@ -1,7 +1,7 @@
 package com.bootcampjavabrunas.microservicemeetup.service;
 
 import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupService;
-import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.BusinessException;
+import com.bootcampjavabrunas.microservicemeetup.application.controller.exceptions.BusinessException;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
 import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.meetup.MeetupRepository;
 import com.bootcampjavabrunas.microservicemeetup.domain.service.impl.meetup.MeetupServiceImpl;

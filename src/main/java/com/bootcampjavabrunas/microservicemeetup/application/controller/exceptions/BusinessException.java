@@ -1,4 +1,4 @@
-package com.bootcampjavabrunas.microservicemeetup.domain.service.exception;
+package com.bootcampjavabrunas.microservicemeetup.application.controller.exceptions;
 
 public class BusinessException extends RuntimeException {
 

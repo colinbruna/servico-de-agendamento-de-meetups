@@ -3,6 +3,7 @@ package com.bootcampjavabrunas.microservicemeetup.domain.service.impl.personRegi
 import com.bootcampjavabrunas.microservicemeetup.application.controller.meetup.MeetupService;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.meetup.Meetup;
 import com.bootcampjavabrunas.microservicemeetup.domain.model.personRegistration.PersonRegistration;
+import com.bootcampjavabrunas.microservicemeetup.domain.service.exception.EntityNotFoundException;
 import com.bootcampjavabrunas.microservicemeetup.infraestructure.repository.personRegistration.PersonRegistrationRepository;
 import com.bootcampjavabrunas.microservicemeetup.application.controller.personRegistration.PersonRegistrationService;
 import org.bson.types.ObjectId;
@@ -67,7 +68,7 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
     private void validateMeetup(final PersonRegistration personRegistration) {
         Meetup idMeetup = meetupService.find(personRegistration.getIdMeetup());
         if (Objects.isNull(idMeetup)) {
-            throw new RuntimeException("Meetup não encontrado");
+            throw new EntityNotFoundException("Meetup não encontrado");
         } else {
             List<PersonRegistration> personRegistrationList = new ArrayList<>();
             personRegistrationList.add(personRegistration);

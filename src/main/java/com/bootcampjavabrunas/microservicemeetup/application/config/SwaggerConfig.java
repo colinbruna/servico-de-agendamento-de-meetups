@@ -19,7 +19,7 @@ public class SwaggerConfig {
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis( RequestHandlerSelectors.basePackage("com.bootcampjavabrunas.microservicemeetup.controller.resource") )
+                .apis(RequestHandlerSelectors.basePackage("com.bootcampjavabrunas.microservicemeetup.application.controller") )
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
@@ -29,7 +29,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("Meetups API")
                 .description("RestApi de meetup produzida no bootcamp de Java da Womakerscode")
-                .version("1.0")
+                .version("1.1")
                 .contact(contact())
                 .build();
     }
